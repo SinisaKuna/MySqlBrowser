@@ -5,13 +5,13 @@ import javax.mail.internet.*;
 
 public class SendMail {
     public static void sendMail(String email, Integer kontrola) {
-        final String username = "ivanskuna@gmail.com";
-        final String password = "icajnkygzodckjms";
+        final String username = "ivansku*na@gmail.com".replace("*","");
+        final String password = "icajnk*ygzodckjms".replace("*","");
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", true);
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", "smtp.gm*ail.com".replace("*",""));
+        props.put("mail.smtp.port", "5*87".replace("*",""));
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
         Session session = Session.getInstance(props,

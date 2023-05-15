@@ -1,0 +1,2 @@
+org.sqlite.JDBC
+jdbc:sqlite:dat/sqlite.db

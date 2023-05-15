@@ -1,15 +1,5 @@
 jdbc:mysql://localhost:3308/Zadatak14
-root
+r**oot
 @beta*Studio*2017
 
-
--- IvanMariaDB
-jdbc:mysql://localhost:3307/zadatak07
-root
-*
-
--- Ivan planetScale
-jdbc:mysql://aws.connect.psdb.cloud/isplate
-root6*54oah4b3*avids1obiq*n
-p*scale_pw_luliimzwiLfiQV1*1ZR7uyNpPvO6GmG0BCM2WsFJlqn*g
 

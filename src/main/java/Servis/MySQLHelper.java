@@ -220,9 +220,9 @@ public class MySQLHelper {
             if (pst != null) {
                 pst.close();
             }
-            if (con != null) {
-                con.close();
-            }
+//            if (con != null) {
+//                con.close();
+//            }
         }
 
         // Vraćamo polje stringova za strane ključeve ili null ako nema stranih ključeva
@@ -233,16 +233,21 @@ public class MySQLHelper {
     public static String getJoinQuery(String tablica, String[][] join){
 
         String query = "SELECT * FROM " + tablica + " " ;
-        for (int i = 0; i < join.length; i++) {
-//            query += " LEFT JOIN " + join[i][2] + " ON " + join[i][0]+ "." + join[i][1] + " = " + join[i][2]+ "." + join[i][3];
 
-//            query += " LEFT JOIN " + join[i][2] + " AS " + join[i][1] + " ON " + join[i][2]+ "." + join[i][1] + " = " + join[i][1]+ "." + join[i][3];
-            if (join[i][1].equals(join[i][3])) {
-                query += " LEFT JOIN " + join[i][2] + " ON " + join[i][0] + "." + join[i][1] + " = " + join[i][2] + "." + join[i][3];
+
+
+
+        for (int i = 0; i < join.length; i++) {
+            String naziv_tablice  = join[i][0];
+            String naziv_kolone  = join[i][1];
+            String referentna_tablica  = join[i][2];
+            String referentna_kolona  = join[i][3];
+            if (naziv_tablice.equals(referentna_tablica)) {
+                query += " LEFT JOIN " + referentna_tablica + " AS " + referentna_kolona + " ON " + referentna_kolona + "." + referentna_kolona + " = " + naziv_tablice + "." + naziv_kolone;
             } else {
-                query += " LEFT JOIN " + join[i][2] + " AS " + join[i][1] + " ON " + join[i][2] + "." + join[i][1] + " = " + join[i][1] + "." + join[i][3];
+                query += " LEFT JOIN " + referentna_tablica + " AS " + referentna_tablica + " ON " + referentna_tablica + "." + referentna_kolona + " = " + naziv_tablice + "." + naziv_kolone;
             }
-        }
+       }
         return query;
     }
 
@@ -253,25 +258,39 @@ public class MySQLHelper {
 
         String query = "SELECT " ;
         for (String[] kolona : kolone) {
+            if (kolona[0].isEmpty()){
+                query +=  kolona[1] + ", ";
+            } else {
                 query +=  kolona[0]+"."+kolona[1] + ", ";
-//            if (provjeriImeUPolju(kolona,kolone_tablice))
-//            {
-//                query +=  tablica+"."+kolona + ", ";
-//            }
-//            else {
-//                query +=  kolona + ", ";
-//            }
+            }
+
 
         }
         query = query.substring(0, query.length() - 2);// Makni zadnji zarez
         query +=" FROM " + tablica ;
         for (int i = 0; i < join.length; i++) {
+
+
 //            query += " LEFT JOIN " + join[i][2] + " ON " + join[i][0]+ "." + join[i][1] + " = " + join[i][2]+ "." + join[i][3];
-            if (join[i][1].equals(join[i][3])) {
-                query += " LEFT JOIN " + join[i][2] + " ON " + join[i][0] + "." + join[i][1] + " = " + join[i][2] + "." + join[i][3];
+
+//            query += " LEFT JOIN " + join[i][2] + " AS " + join[i][1] + " ON " + join[i][2]+ "." + join[i][1] + " = " + join[i][1]+ "." + join[i][3];
+//
+//            if (naziv_kolone.equals(referentna_kolona)) {
+//                query += " LEFT JOIN " + join[i][2] + " ON " + join[i][0] + "." + join[i][1] + " = " + join[i][2] + "." + join[i][3];
+//            } else {
+//                query += " LEFT JOIN " + referentna_tablica + " AS " + referentna_tablica + " ON " + referentna_tablica + "." + referentna_kolona + " = " + naziv_tablice + "." + naziv_kolone;
+//            }
+
+            String naziv_tablice  = join[i][0];
+            String naziv_kolone  = join[i][1];
+            String referentna_tablica  = join[i][2];
+            String referentna_kolona  = join[i][3];
+            if (naziv_tablice.equals(referentna_tablica)) {
+                query += " LEFT JOIN " + referentna_tablica + " AS " + referentna_kolona + " ON " + referentna_kolona + "." + referentna_kolona + " = " + naziv_tablice + "." + naziv_kolone;
             } else {
-                query += " LEFT JOIN " + join[i][2] + " AS " + join[i][1] + " ON " + join[i][2] + "." + join[i][1] + " = " + join[i][1] + "." + join[i][3];
+                query += " LEFT JOIN " + referentna_tablica + " AS " + referentna_tablica + " ON " + referentna_tablica + "." + referentna_kolona + " = " + naziv_tablice + "." + naziv_kolone;
             }
+
         }
 
         return query;
@@ -312,11 +331,45 @@ public class MySQLHelper {
     public static String getQueryForJoinTables(String tablica) throws SQLException {
         String[][] join = getJoinData(tablica);
         String query = getJoinQuery(tablica,join);
+//        System.out.println(query);
         String[][] columns = getQueryFields(query);
-//        String[] kolone = filtrirajJedinstveneKolone(columns);
         query = getFinalJoinQuery(tablica,columns,join);
+//        System.out.println(query);
         return query;
     }
 
+    public static String[] getDatabaseNames(String port, String username, String password) {
+        String url = "jdbc:mysql://localhost:" + port;
 
+        try {
+            // Spajanje na MySQL server
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            // Izvršavanje SQL upita za dobivanje liste svih baza podataka
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet resultSet = metaData.getCatalogs();
+
+            // Prikupljanje imena svih baza podataka u niz
+            int size = 0;
+            while (resultSet.next()) {
+                size++;
+            }
+            String[] databaseNames = new String[size];
+            resultSet.beforeFirst();
+            int i = 0;
+            while (resultSet.next()) {
+                String databaseName = resultSet.getString("TABLE_CAT");
+                databaseNames[i++] = databaseName;
+            }
+
+            // Zatvaranje resursa
+            resultSet.close();
+//            connection.close();
+
+            return databaseNames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
+    }
 }

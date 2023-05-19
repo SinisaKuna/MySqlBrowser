@@ -1,5 +1,4 @@
-jdbc:mysql://localhost:3308/Zadatak14
-r**oot
-@beta*Studio*2017
-
-
+jdbc:mysql://localhost:3308/antikvarijat
+root
+*@betaStudio2017
+3308

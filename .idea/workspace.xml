@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5095bdc5-eaf7-4f12-9c3e-9184e251fb5a" name="Changes" comment="Neoporezive isplate 29.04.2023. 002" />
+    <list default="true" id="5095bdc5-eaf7-4f12-9c3e-9184e251fb5a" name="Changes" comment="mySqlBrowser">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Servis/DatabaseConnectionFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Servis/DatabaseSelectionFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Servis/QueryGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/mysql_connection.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/mysql_connection.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Glavna.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Glavna.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servis/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servis/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servis/MySQLHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servis/MySQLHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servis/Testing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Testing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servis/boxBrowse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servis/boxBrowse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servis/frmBrowse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servis/frmBrowse.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +57,7 @@
     <option name="jreName" value="#JAVA_HOME" />
   </component>
   <component name="ProjectId" id="2O0XK3JQwp1bLUblCIECKGyGXRs" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -55,7 +69,7 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/[java]/MySqlBrowser&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/[java]/[Arhiva]/Neoporezive_isplate_joppd&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -71,11 +85,11 @@
       </method>
     </configuration>
     <configuration name="Testing" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Servis.Testing" />
+      <option name="MAIN_CLASS_NAME" value="Testing" />
       <module name="MySqlBrowser" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Servis.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -147,7 +161,19 @@
       <option name="project" value="LOCAL" />
       <updated>1682764719803</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="mySqlBrowser">
+      <created>1684153119090</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1684153119090</updated>
+    </task>
+    <task id="LOCAL−00009" summary="mySqlBrowser">
+      <created>1684153250778</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1684153250778</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -155,7 +181,8 @@
     <MESSAGE value="Neoporezive isplate 28.04.2023." />
     <MESSAGE value="Neoporezive isplate 29.04.2023." />
     <MESSAGE value="Neoporezive isplate 29.04.2023. 002" />
-    <option name="LAST_COMMIT_MESSAGE" value="Neoporezive isplate 29.04.2023. 002" />
+    <MESSAGE value="mySqlBrowser" />
+    <option name="LAST_COMMIT_MESSAGE" value="mySqlBrowser" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -166,8 +193,13 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Servis/frmBrowse.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="10" />
+          <line>114</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Servis/MySQLHelper.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

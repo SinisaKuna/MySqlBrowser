@@ -124,6 +124,7 @@ public class boxBrowse extends JDialog {
 
 
     private void SpremiMe(String tableName, String identityField, String identityValue, JTextField[] textFields) throws SQLException {
+
         if (identityValue == "0")
         {
             insertTableRow(tableName,identityField, textFields);
@@ -135,128 +136,136 @@ public class boxBrowse extends JDialog {
     }
 
     public void insertTableRow(String nazivTablice, String identityField, JTextField[] textFields) throws SQLException {
+        try {
+            String[] polja = getForeignKeys(nazivTablice);
+            // Stvori spoj na bazu podataka
+            Connection conn = getConnection();
 
-        String[] polja = getForeignKeys(nazivTablice);
-        // Stvori spoj na bazu podataka
-        Connection conn = getConnection();
+            // Get column names for the specified table
+            Statement selectstmt = conn.createStatement();
+            ResultSet rs = selectstmt.executeQuery("SELECT * FROM " + nazivTablice);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int columnCount = metadata.getColumnCount();
+            String[] columnNames = new String[columnCount];
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames[i - 1] = metadata.getColumnName(i);
+            }
 
-        // Get column names for the specified table
-        Statement selectstmt = conn.createStatement();
-        ResultSet rs = selectstmt.executeQuery("SELECT * FROM " + nazivTablice);
-        ResultSetMetaData metadata = rs.getMetaData();
-        int columnCount = metadata.getColumnCount();
-        String[] columnNames = new String[columnCount];
-        for (int i = 1; i <= columnCount; i++) {
-            columnNames[i-1] = metadata.getColumnName(i);
-        }
-
-        // Stvori SQL upit za umetanje novog redka u tablicu
-        String sql = "INSERT INTO " + nazivTablice + " (";
-        for (int i = 0; i < columnCount; i++) {
-            if (!columnNames[i].equals(identityField)) {
+            // Stvori SQL upit za umetanje novog redka u tablicu
+            String sql = "INSERT INTO " + nazivTablice + " (";
+            for (int i = 0; i < columnCount; i++) {
+                if (!columnNames[i].equals(identityField)) {
 
 
-                if (provjeriImeUPolju(columnNames[i], polja))
-                {
-                    if (!textFields[i].getText().equals("")) {
-                    sql += columnNames[i];
-                    if (i < columnCount - 1) {
-                        sql += ", ";
-                    }
-                }
+                    if (provjeriImeUPolju(columnNames[i], polja)) {
+                        if (!textFields[i].getText().equals("")) {
+                            sql += columnNames[i];
+                            if (i < columnCount - 1) {
+                                sql += ", ";
+                            }
+                        }
 
-                } else {
-                    sql += columnNames[i];
-                    if (i < columnCount - 1) {
-                        sql += ", ";
+                    } else {
+                        sql += columnNames[i];
+                        if (i < columnCount - 1) {
+                            sql += ", ";
+                        }
                     }
                 }
             }
-        }
-        sql += ") VALUES (";
-        for (int i = 0; i < columnCount; i++) {
-            if (!columnNames[i].equals(identityField)) {
+            sql += ") VALUES (";
+            for (int i = 0; i < columnCount; i++) {
+                if (!columnNames[i].equals(identityField)) {
 
-                if (provjeriImeUPolju(columnNames[i], polja))
-                {
-                    if (!textFields[i].getText().equals("")) {
+                    if (provjeriImeUPolju(columnNames[i], polja)) {
+                        if (!textFields[i].getText().equals("")) {
+                            sql += "'" + textFields[i].getText() + "'";
+                            if (i < columnCount - 1) {
+                                sql += ", ";
+                            }
+                        }
+
+                    } else {
                         sql += "'" + textFields[i].getText() + "'";
                         if (i < columnCount - 1) {
                             sql += ", ";
                         }
                     }
-
-                } else {
-                    sql += "'" + textFields[i].getText() + "'";
-                    if (i < columnCount - 1) {
-                        sql += ", ";
-                    }
                 }
             }
+            sql += ")";
+            sql = sql.replace(", )", " )");
+
+            // Izvrši SQL upit
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+            // Zatvori sve otvorene resurse
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            String greska = e.getMessage();
+            JOptionPane.showMessageDialog(null,  greska,"Greška", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
-        sql += ")";
-        sql = sql.replace(", )"," )");
 
-        // Izvrši SQL upit
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate(sql);
-
-        // Zatvori sve otvorene resurse
-        stmt.close();
-        conn.close();
     }
 
 
     public void updateTableRow(String nazivTablice, JTextField[] textFields, String identityField, String identityValue) throws SQLException {
+        try {
+            String[] polja = getForeignKeys(nazivTablice);
+            // Stvori spoj na bazu podataka
+            Connection conn = getConnection();
 
-        String[] polja = getForeignKeys(nazivTablice);
-        // Stvori spoj na bazu podataka
-        Connection conn = getConnection();
+            // Get column names for the specified table
+            Statement selectstmt = conn.createStatement();
+            ResultSet rs = selectstmt.executeQuery("SELECT * FROM " + nazivTablice);
+            ResultSetMetaData metadata = rs.getMetaData();
+            int columnCount = metadata.getColumnCount();
+            String[] columnNames = new String[columnCount];
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames[i - 1] = metadata.getColumnName(i);
+            }
 
-        // Get column names for the specified table
-        Statement selectstmt = conn.createStatement();
-        ResultSet rs = selectstmt.executeQuery("SELECT * FROM " + nazivTablice);
-        ResultSetMetaData metadata = rs.getMetaData();
-        int columnCount = metadata.getColumnCount();
-        String[] columnNames = new String[columnCount];
-        for (int i = 1; i <= columnCount; i++) {
-            columnNames[i-1] = metadata.getColumnName(i);
-        }
-
-        // Stvori SQL upit za ažuriranje redaka u tablici
-        String sql = "UPDATE " + nazivTablice + " SET ";
-        for (int i = 0; i < columnCount; i++) {
-            if (!columnNames[i].equals(identityField)) {
-                if (provjeriImeUPolju(columnNames[i], polja))
-                {
-                    if (!textFields[i].getText().equals("")) {
+            // Stvori SQL upit za ažuriranje redaka u tablici
+            String sql = "UPDATE " + nazivTablice + " SET ";
+            for (int i = 0; i < columnCount; i++) {
+                if (!columnNames[i].equals(identityField)) {
+                    if (provjeriImeUPolju(columnNames[i], polja)) {
+                        if (!textFields[i].getText().equals("")) {
+                            sql += columnNames[i] + "='" + textFields[i].getText() + "'";
+                            if (i < columnCount - 1) {
+                                sql += ", ";
+                            }
+                        } else {
+                            sql += columnNames[i] + "= null";
+                            if (i < columnCount - 1) {
+                                sql += ", ";
+                            }
+                        }
+                    } else {
                         sql += columnNames[i] + "='" + textFields[i].getText() + "'";
                         if (i < columnCount - 1) {
                             sql += ", ";
                         }
-                    } else {
-                        sql += columnNames[i] + "= null";
-                        if (i < columnCount - 1) {
-                            sql += ", ";
-                        }
-                    }
-                } else {
-                    sql += columnNames[i] + "='" + textFields[i].getText() + "'";
-                    if (i < columnCount - 1) {
-                        sql += ", ";
                     }
                 }
             }
-        }
-        sql += " WHERE " + identityField + "='" + identityValue + "'";
-        sql = sql.replace(",  WHERE"," WHERE");
-        // Izvrši SQL upit
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate(sql);
+            sql += " WHERE " + identityField + "='" + identityValue + "'";
+            sql = sql.replace(",  WHERE", " WHERE");
+            // Izvrši SQL upit
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
 
-        // Zatvori sve otvorene resurse
-        stmt.close();
-        conn.close();
+            // Zatvori sve otvorene resurse
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            String greska = e.getMessage();
+            JOptionPane.showMessageDialog(null,  greska,"Greška", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
 }

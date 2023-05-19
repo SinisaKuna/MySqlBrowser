@@ -8,6 +8,8 @@ import java.util.Arrays;
 import static Servis.FileUtils.readTxt;
 
 public class DatabaseConnection {
+
+
     private static Connection conn = null;
     private static String[] connectionInfoTemp;
     private static final String[] conn_type;
@@ -31,6 +33,16 @@ public class DatabaseConnection {
             throw new RuntimeException(e);
         }
     }
+
+//    public static Connection getConnection() {
+//        return conn;
+//    }
+
+    public static void setConnection(Connection conn) {
+        DatabaseConnection.conn = conn;
+    }
+
+
     public static Connection getMySQLConnection() throws IOException {
         connectionInfoTemp = readTxt("dat/mysql_connection.txt", 3);
 

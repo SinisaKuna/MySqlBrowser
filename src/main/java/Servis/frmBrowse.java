@@ -74,7 +74,7 @@ public class frmBrowse extends JFrame {
             // Zatvaranje veze s bazom podataka
             rs.close();
             stmt.close();
-            con.close();
+//            con.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
